@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación de Boda - Lorenzo & Thalia</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
@@ -128,7 +128,7 @@
     .timeline-content { width: 40%; padding: 10px; }
     .timeline-dot { width: 10px; height: 10px; background: var(--azul-antiguo); border-radius: 50%; z-index: 2; border: 2px solid var(--dorado); }
     .gift-arch { background: var(--celeste-bajito); padding: 50px 20px; border-radius: 120px 120px 20px 20px; border: 1px solid #b8ccd9; flex: 1; min-width: 250px; }
-    .btn-wa { background: var(--azul-antiguo); color: white; padding: 16px 30px; border-radius: 4px; border: none; font-weight: 600; letter-spacing: 2px; cursor: pointer; transition: 0.3s; width: 100%; max-width: 300px; }
+    .btn-wa { background: var(--azul-antiguo); color: white; padding: 16px 30px; border-radius: 4px; border: none; font-weight: 600; letter-spacing: 2px; cursor: pointer; transition: 0.3s; width: 100%; max-width: 300px; text-decoration: none; display: inline-block; }
     .btn-wa:hover { background: var(--dorado); }
     .click-instruction { margin-top: 20px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #6e5a44; animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
@@ -235,16 +235,13 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. LÓGICA DEL CONTADOR (RECONSTRUIDA) ---
-    // Usamos formato ISO 8601 que es el estándar universal
-   
+    // --- 1. LÓGICA DEL CONTADOR ---
     const targetDate = new Date("2026-05-24T10:30:00-05:00").getTime();
 
     const updateTimer = () => {
         const now = new Date().getTime();
         const distance = targetDate - now;
 
-        // Elementos del DOM con nuevos IDs para evitar conflictos
         const d_el = document.getElementById("VAL_DIAS");
         const h_el = document.getElementById("VAL_HORAS");
         const m_el = document.getElementById("VAL_MIN");
@@ -255,20 +252,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Fórmulas matemáticas puras
         const d = Math.floor(distance / (1000 * 60 * 60 * 24));
         const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Inyección de texto con formato de 2 dígitos
         if(d_el) d_el.textContent = String(d).padStart(2, '0');
         if(h_el) h_el.textContent = String(h).padStart(2, '0');
         if(m_el) m_el.textContent = String(m).padStart(2, '0');
         if(s_el) s_el.textContent = String(s).padStart(2, '0');
     };
 
-    // Arrancar contador
     setInterval(updateTimer, 1000);
     updateTimer();
 
@@ -300,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIndex = 0;
         const totalSlides = slider.children.length;
 
-        // Crear puntos (dots)
         for(let i=0; i<totalSlides; i++) {
             const dot = document.createElement('span');
             dot.className = i === 0 ? 'dot active' : 'dot';
@@ -334,18 +327,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 4. FUNCIÓN WHATSAPP ---
+// --- 4. FUNCIÓN WHATSAPP MODIFICADA ---
 function enviarWA() {
-    const telefono = "51900000000"; // Cambia este número
+    // CAMBIA EL NÚMERO ABAJO: Código de país + número (ejemplo para Ecuador: 593...)
+    const telefono = "593900000000"; 
+    
     const nombre = document.getElementById('nombre_invitado').value;
     const conf = document.getElementById('confirmacion_val').value;
     
     if (!nombre) {
-        alert("Por favor, escribe tu nombre.");
+        alert("Por favor, escribe tu nombre completo para confirmar.");
         return;
     }
 
-    const texto = `¡Hola! Confirmo mi asistencia para la Boda.%0A%0A*Nombre:* ${nombre}%0A*Estado:* ${conf}`;
+    // Mensaje formateado para WhatsApp
+    const texto = `¡Hola! Confirmo mi asistencia para la Boda.%0A%0A` + 
+                  `*Invitado:* ${nombre}%0A` + 
+                  `*Respuesta:* ${conf}%0A` +
+                  `*Pases:* 5`;
+
     window.open(`https://wa.me/${telefono}?text=${texto}`, '_blank');
 }
 </script>
