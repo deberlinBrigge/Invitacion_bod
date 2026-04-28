@@ -1,118 +1,353 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lorenzo & Thalia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    :root { --azul: #1c2a3d; --dorado: #b59a6d; --crema: #f4ece0; }
-    body { margin: 0; background-color: #e2d1b9; font-family: 'Montserrat', sans-serif; color: var(--azul); overflow-x: hidden; }
-    
-    /* SECCIÓN SOBRE */
-    .hero { height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; flex-direction: column; }
-    .env-wrapper { position: relative; width: 320px; height: 220px; cursor: pointer; perspective: 1000px; }
-    .env-box { position: absolute; width: 100%; height: 100%; background: var(--azul); border-radius: 4px; z-index: 4; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-    .env-top { position: absolute; top: 0; width: 100%; height: 100%; background: #24354a; clip-path: polygon(0 0, 100% 0, 50% 55%); z-index: 6; transition: 0.8s; transform-origin: top; }
-    .seal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -25%); width: 65px; height: 65px; background: radial-gradient(circle, #d4af37, #b59a6d); border-radius: 50%; z-index: 10; display: flex; justify-content: center; align-items: center; color: white; font-family: 'Playfair Display'; font-size: 1.5rem; transition: 0.5s; }
-    .card { position: absolute; bottom: 5px; left: 5%; width: 90%; height: 200px; background: var(--crema); z-index: 2; transition: 0.8s; padding: 20px; text-align: center; box-sizing: border-box; }
-    
-    .env-wrapper.open .env-top { transform: rotateX(180deg); z-index: 1; }
-    .env-wrapper.open .card { transform: translateY(-160px); z-index: 8; height: 260px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-    .env-wrapper.open .seal { opacity: 0; }
+    :root {
+      --azul-antiguo: #1c2a3d; 
+      --fuente-nombres: 'Playfair Display', serif;
+      --dorado: #b59a6d;
+      --celeste-bajito: #d1e3f0;
+      --crema: #f4ece0;
+    }
 
-    /* CONTENIDO */
-    .main-content { display: none; padding: 40px 15px; max-width: 500px; margin: 0 auto; text-align: center; }
-    .arch { background: white; border-radius: 120px 120px 20px 20px; padding: 50px 20px; border: 1px solid #dcd0ba; margin-bottom: 30px; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0; padding: 0;
+      background-color: #e2d1b9;
+      background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
+      font-family: 'Montserrat', sans-serif;
+      color: var(--azul-antiguo);
+    }
+
+    /* --- SOBRE --- */
+    .hero-section {
+      height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 360px; height: 240px;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .envelope {
+      position: absolute; width: 100%; height: 100%;
+      background-color: var(--azul-antiguo);
+      background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      border-radius: 4px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      z-index: 4;
+    }
+
+    .envelope-top {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #24354a;
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      z-index: 6;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: top;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .wax-seal {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -20%);
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, #d4af37, #b59a6d);
+      border-radius: 50%;
+      z-index: 10;
+      display: flex; justify-content: center; align-items: center;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.4);
+      transition: 0.5s ease;
+    }
+
+    .wax-seal span { font-family: var(--fuente-nombres); font-size: 2rem; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+
+    .tag-card {
+      position: absolute; bottom: 5px; left: 5%;
+      width: 90%; height: 230px;
+      background-color: var(--crema);
+      border-radius: 3px;
+      z-index: 2;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 30px 15px;
+      text-align: center;
+      box-sizing: border-box;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .envelope-wrapper.open .envelope-top { transform: rotateX(180deg); z-index: 1; }
+    .envelope-wrapper.open .tag-card { transform: translateY(-200px) scale(1.05); z-index: 8; height: 300px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .envelope-wrapper.open .wax-seal { opacity: 0; transform: translate(-50%, -100%) scale(0); }
+
+    /* --- SECCIONES PRINCIPALES --- */
+    .content-section { display: none; padding: 40px 15px; max-width: 700px; margin: 0 auto; text-align: center; }
     
-    /* CARRUSEL */
-    .slider-box { position: relative; overflow: hidden; border-radius: 100px 100px 20px 20px; border: 5px solid white; margin: 20px 0; }
-    .slides { display: flex; transition: 0.6s ease-in-out; }
-    .slides img { width: 100%; aspect-ratio: 3/4; object-fit: cover; flex-shrink: 0; }
-    
-    .btn-wa { background: var(--azul); color: white; border: none; padding: 15px 25px; border-radius: 5px; width: 100%; cursor: pointer; font-weight: 600; text-decoration: none; display: block; margin-top: 10px; }
-    input, select { width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box; border: 1px solid #ccc; }
+    .arch-card-large { 
+      background: white; 
+      border-radius: 180px 180px 20px 20px; 
+      padding: 80px 30px 50px; 
+      border: 1px solid #dcd0ba; 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .countdown-container {
+      display: flex; justify-content: center; align-items: center; gap: 15px;
+      margin-top: 30px; padding-top: 20px; border-top: 1px solid #f0f0f0;
+    }
+    .countdown-item { display: flex; flex-direction: column; align-items: center; min-width: 65px; }
+    .countdown-number { font-family: var(--fuente-nombres); font-size: 2.2rem; color: var(--azul-antiguo); line-height: 1; }
+    .countdown-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dorado); margin-top: 5px; font-weight: 600; }
+
+    /* --- CARRUSEL --- */
+    .carousel-outer { margin: 40px auto; max-width: 450px; }
+    .carousel-container { position: relative; overflow: hidden; border-radius: 150px 150px 20px 20px; border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1); background: #eee; }
+    .carousel-slide { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .carousel-slide img { width: 100%; aspect-ratio: 3/4; object-fit: cover; flex-shrink: 0; }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(28, 42, 61, 0.4); color: white; border: none; width: 40px; height: 40px; cursor: pointer; border-radius: 50%; z-index: 10; }
+    .prev { left: 10px; } .next { right: 10px; }
+    .dots-container { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
+    .dot { width: 8px; height: 8px; background: #bbb; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+    .dot.active { background: var(--dorado); transform: scale(1.3); }
+
+    /* --- ESTILOS EXTRA --- */
+    .timeline-container { position: relative; margin: 40px 0; }
+    .timeline-line { position: absolute; left: 50%; width: 1px; background: var(--dorado); height: 100%; top: 0; }
+    .timeline-item { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .timeline-content { width: 40%; padding: 10px; }
+    .timeline-dot { width: 10px; height: 10px; background: var(--azul-antiguo); border-radius: 50%; z-index: 2; border: 2px solid var(--dorado); }
+    .gift-arch { background: var(--celeste-bajito); padding: 50px 20px; border-radius: 120px 120px 20px 20px; border: 1px solid #b8ccd9; flex: 1; min-width: 250px; }
+    .btn-wa { background: var(--azul-antiguo); color: white; padding: 16px 30px; border-radius: 4px; border: none; font-weight: 600; letter-spacing: 2px; cursor: pointer; transition: 0.3s; width: 100%; max-width: 300px; }
+    .btn-wa:hover { background: var(--dorado); }
+    .click-instruction { margin-top: 20px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #6e5a44; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
   </style>
 </head>
 <body>
 
-  <div class="hero">
-    <div class="env-wrapper" id="env" onclick="this.classList.toggle('open')">
-      <div class="env-box">
-        <div class="env-top"></div>
-        <div class="seal">L&T</div>
+  <div class="hero-section">
+    <div class="envelope-wrapper" id="envelope">
+      <div class="envelope">
+        <div class="envelope-top"></div>
+        <div class="wax-seal"><span>L&T</span></div>
       </div>
-      <div class="card">
-        <h3 style="font-family: 'Playfair Display'; margin: 0;">Lorenzo & Thalia</h3>
-        <p style="font-size: 0.7rem; color: var(--dorado); letter-spacing: 2px;">INVITACIÓN</p>
-        <p style="font-weight: 600; margin-top: 15px;">FAM. LLAMAS LÓPEZ</p>
-        <p style="font-size: 0.8rem; color: #777;">Pases: 5</p>
-        <button class="btn-wa" id="verMas" style="padding: 8px; font-size: 0.7rem;">VER DETALLES</button>
+      <div class="tag-card">
+        <h2 style="font-family: var(--fuente-nombres); font-size: 1.8rem; margin-bottom: 5px;">Lorenzo & Thalia</h2>
+        <p style="font-size: 0.6rem; letter-spacing: 3px; font-weight: 700; color: var(--dorado);">INVITACIÓN EXCLUSIVA</p>
+        <div style="margin: 20px 0; height: 1px; background: rgba(0,0,0,0.1);"></div>
+        <p style="font-weight: 600; margin: 0;">FAM. LLAMAS LÓPEZ</p>
+        <p style="font-size: 0.8rem; color: #666;">Contamos con 5 Pases</p>
+        <button class="btn-wa" style="margin-top: 20px; padding: 8px 15px; font-size: 0.7rem;" id="btnDetalles">Ver Detalles</button>
       </div>
     </div>
-    <p style="margin-top: 20px; font-size: 0.7rem; letter-spacing: 1px;">TOCA EL SOBRE PARA ABRIR</p>
+    <div class="click-instruction">Toca el sobre para abrir</div>
   </div>
 
-  <div class="main-content" id="content">
-    <div class="arch">
-      <h1 style="font-family: 'Playfair Display';">Lorenzo & Thalia</h1>
-      <p>24 DE MAYO, 2026</p>
-      <div id="timer" style="font-weight: 600; font-size: 1.2rem; color: var(--dorado);"></div>
-    </div>
+  <div id="secciones" class="content-section">
+    <div class="arch-card-large">
+      <p style="letter-spacing: 5px; font-size: 0.8rem; color: var(--dorado);">SAVE THE DATE</p>
+      <h1 style="font-family: var(--fuente-nombres); font-size: 2.8rem; margin: 10px 0;">Lorenzo & Thalia</h1>
+      <p style="font-style: italic; color: #777; margin-bottom: 25px;">"Donde tú vayas, yo iré; donde tú vivas, yo viviré."</p>
+      
+      <div style="font-size: 1.4rem; font-weight: 600; color: var(--azul-antiguo); letter-spacing: 2px;">
+        24 . MAYO . 2026
+      </div>
 
-    <div class="slider-box">
-      <div class="slides" id="slider">
-        <img src="img/foto1.webp" onerror="this.src='foto1.webp'">
-        <img src="img/foto2.jpeg" onerror="this.src='foto2.jpeg'">
-        <img src="img/foto3.jpeg" onerror="this.src='foto3.jpeg'">
+      <div class="countdown-container" id="timer-display">
+        <div class="countdown-item"><span class="countdown-number" id="VAL_DIAS">00</span><span class="countdown-label">Días</span></div>
+        <div class="countdown-item"><span class="countdown-number" id="VAL_HORAS">00</span><span class="countdown-label">Horas</span></div>
+        <div class="countdown-item"><span class="countdown-number" id="VAL_MIN">00</span><span class="countdown-label">Min.</span></div>
+        <div class="countdown-item"><span class="countdown-number" id="VAL_SEG">00</span><span class="countdown-label">Seg.</span></div>
       </div>
     </div>
 
-    <div class="arch" style="border-radius: 20px;">
-      <h3>CONFIRMAR ASISTENCIA</h3>
-      <input type="text" id="nom" placeholder="Tu nombre completo">
-      <select id="est">
-        <option value="Confirmado">✓ Sí, asistiré</option>
-        <option value="No asistirá">X No podré ir</option>
-      </select>
-      <button class="btn-wa" onclick="enviar()">ENVIAR A WHATSAPP</button>
+    <div class="carousel-outer">
+        <div class="carousel-container">
+            <div class="carousel-slide" id="slider">
+                <img src="img/foto1.webp" alt="Foto 1">
+                <img src="img/foto2.jpeg" alt="Foto 2">
+                <img src="img/foto3.jpeg" alt="Foto 3">
+            </div>
+            <button class="carousel-btn prev" id="prevBtn">❮</button>
+            <button class="carousel-btn next" id="nextBtn">❯</button>
+        </div>
+        <div class="dots-container" id="dots-wrap"></div>
+    </div>
+
+    <h2 style="font-family: var(--fuente-nombres); font-size: 2rem; margin-top: 60px;">Itinerario</h2>
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+      <div class="timeline-item">
+        <div class="timeline-content" style="text-align: right;">
+          <h4 style="margin:0;">Ceremonia</h4>
+          <p style="font-size: 0.8rem;">10:30 AM<br>Iglesia San Francisco</p>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" style="text-align: left;">
+          <h4 style="margin:0;">Celebración</h4>
+          <p style="font-size: 0.8rem;">12:00 PM<br>Mistika Casa Club</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 50px;">
+        <div class="gift-arch">
+            <i class="fa-solid fa-envelope-open-text" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+            <h4 style="font-family: var(--fuente-nombres);">Lluvia de Sobres</h4>
+            <p style="font-size: 0.8rem;">Agradecemos su detalle en efectivo el día del evento.</p>
+        </div>
+        <div class="gift-arch" style="background: white;">
+            <i class="fa-solid fa-store" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
+            <h4 style="font-family: var(--fuente-nombres);">Mesa Oechsle</h4>
+            <p style="font-size: 0.8rem;">Código de novios:<br><strong>Lorenzo y Thalia</strong></p>
+        </div>
+    </div>
+
+    <div class="arch-card-large" style="border-radius: 20px; padding: 40px 20px; margin-top: 60px;">
+        <h3 style="font-family: var(--fuente-nombres); letter-spacing: 2px;">CONFIRMACIÓN</h3>
+        <form id="waForm" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+            <input type="text" id="nombre_invitado" placeholder="Nombre completo" style="width: 100%; max-width: 300px; padding: 12px; border: 1px solid #ddd; border-radius: 4px;" required>
+            <select id="confirmacion_val" style="width: 100%; max-width: 300px; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="Sí, asistiré">✓ Confirmar Asistencia</option>
+                <option value="Lo siento, no podré">X No podré asistir</option>
+            </select>
+            <button type="button" class="btn-wa" onclick="enviarWA()">ENVIAR A WHATSAPP <i class="fa-brands fa-whatsapp"></i></button>
+        </form>
     </div>
   </div>
 
 <script>
-  // Mostrar contenido
-  document.getElementById('verMas').addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.getElementById('content').style.display = 'block';
-    document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
-  });
+document.addEventListener('DOMContentLoaded', () => {
 
-  // Carrusel
-  let idx = 0;
-  setInterval(() => {
-    const s = document.getElementById('slider');
-    idx = (idx + 1) % 3;
-    s.style.transform = `translateX(-${idx * 100}%)`;
-  }, 4000);
+    // --- 1. LÓGICA DEL CONTADOR (RECONSTRUIDA) ---
+    // Usamos formato ISO 8601 que es el estándar universal
+   
+    const targetDate = new Date("2026-05-24T10:30:00-05:00").getTime();
 
-  // WhatsApp
-  function enviar() {
-    const cel = "593987654321"; // <--- PON TU NÚMERO AQUÍ (sin el +)
-    const n = document.getElementById('nom').value;
-    const e = document.getElementById('est').value;
-    if(!n) return alert("Escribe tu nombre");
-    window.open(`https://wa.me/${cel}?text=Hola! Confirmo asistencia.%0ANombre: ${n}%0AEstado: ${e}`);
-  }
+    const updateTimer = () => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
 
-  // Contador
-  const fin = new Date("2026-05-24T10:30:00").getTime();
-  setInterval(() => {
-    const ahora = new Date().getTime();
-    const d = fin - ahora;
-    const dias = Math.floor(d / (1000 * 60 * 60 * 24));
-    document.getElementById("timer").innerText = `Faltan ${dias} días`;
-  }, 1000);
+        // Elementos del DOM con nuevos IDs para evitar conflictos
+        const d_el = document.getElementById("VAL_DIAS");
+        const h_el = document.getElementById("VAL_HORAS");
+        const m_el = document.getElementById("VAL_MIN");
+        const s_el = document.getElementById("VAL_SEG");
+
+        if (distance < 0) {
+            document.getElementById("timer-display").innerHTML = "<h3>¡ES HOY EL GRAN DÍA!</h3>";
+            return;
+        }
+
+        // Fórmulas matemáticas puras
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Inyección de texto con formato de 2 dígitos
+        if(d_el) d_el.textContent = String(d).padStart(2, '0');
+        if(h_el) h_el.textContent = String(h).padStart(2, '0');
+        if(m_el) m_el.textContent = String(m).padStart(2, '0');
+        if(s_el) s_el.textContent = String(s).padStart(2, '0');
+    };
+
+    // Arrancar contador
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // --- 2. LÓGICA DEL SOBRE ---
+    const envelope = document.getElementById('envelope');
+    const btnDetalles = document.getElementById('btnDetalles');
+    const secciones = document.getElementById('secciones');
+
+    if (envelope) {
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('open');
+        });
+    }
+
+    if (btnDetalles) {
+        btnDetalles.addEventListener('click', (e) => {
+            e.stopPropagation();
+            secciones.style.display = 'block';
+            setTimeout(() => {
+                secciones.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        });
+    }
+
+    // --- 3. LÓGICA DEL CARRUSEL ---
+    const slider = document.getElementById('slider');
+    const dotsWrap = document.getElementById('dots-wrap');
+    if (slider && dotsWrap) {
+        let currentIndex = 0;
+        const totalSlides = slider.children.length;
+
+        // Crear puntos (dots)
+        for(let i=0; i<totalSlides; i++) {
+            const dot = document.createElement('span');
+            dot.className = i === 0 ? 'dot active' : 'dot';
+            dot.onclick = () => {
+                currentIndex = i;
+                updateCarousel();
+            };
+            dotsWrap.appendChild(dot);
+        }
+
+        const updateCarousel = () => {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            const dots = dotsWrap.querySelectorAll('.dot');
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+        };
+
+        document.getElementById('nextBtn').onclick = () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        };
+
+        document.getElementById('prevBtn').onclick = () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        };
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        }, 4000);
+    }
+});
+
+// --- 4. FUNCIÓN WHATSAPP ---
+function enviarWA() {
+    const telefono = "51900000000"; // Cambia este número
+    const nombre = document.getElementById('nombre_invitado').value;
+    const conf = document.getElementById('confirmacion_val').value;
+    
+    if (!nombre) {
+        alert("Por favor, escribe tu nombre.");
+        return;
+    }
+
+    const texto = `¡Hola! Confirmo mi asistencia para la Boda.%0A%0A*Nombre:* ${nombre}%0A*Estado:* ${conf}`;
+    window.open(`https://wa.me/${telefono}?text=${texto}`, '_blank');
+}
 </script>
 </body>
 </html>
