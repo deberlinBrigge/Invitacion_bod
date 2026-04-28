@@ -1,104 +1,273 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invitación Lorenzo & Thalia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    :root { --azul: #1c2a3d; --dorado: #b59a6d; --crema: #f4ece0; }
-    body { margin: 0; background-color: #e2d1b9; font-family: 'Montserrat', sans-serif; color: var(--azul); overflow-x: hidden; }
-    
-    .hero-section { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; }
-    .envelope-wrapper { position: relative; width: 300px; height: 200px; cursor: pointer; perspective: 1000px; }
-    .envelope { position: absolute; width: 100%; height: 100%; background: var(--azul); z-index: 4; border-radius: 4px; }
-    .envelope-top { position: absolute; top: 0; width: 100%; height: 100%; background: #24354a; clip-path: polygon(0 0, 100% 0, 50% 55%); z-index: 6; transition: 0.8s; transform-origin: top; }
-    .tag-card { position: absolute; bottom: 5px; left: 5%; width: 90%; height: 180px; background: var(--crema); z-index: 2; transition: 0.8s; text-align: center; padding: 15px; box-sizing: border-box; }
-    .envelope-wrapper.open .envelope-top { transform: rotateX(180deg); z-index: 1; }
-    .envelope-wrapper.open .tag-card { transform: translateY(-150px); z-index: 8; height: 250px; }
+    :root {
+      --azul-antiguo: #1c2a3d; 
+      --fuente-nombres: 'Playfair Display', serif;
+      --dorado: #b59a6d;
+      --crema: #f4ece0;
+      --celeste: #d1e3f0;
+    }
 
-    .content-section { display: none; padding: 20px; max-width: 500px; margin: 0 auto; }
-    .arch-card { background: white; border-radius: 120px 120px 20px 20px; padding: 50px 20px; text-align: center; border: 1px solid #dcd0ba; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; padding: 0;
+      background-color: #e2d1b9;
+      background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
+      font-family: 'Montserrat', sans-serif;
+      color: var(--azul-antiguo);
+      overflow-x: hidden;
+    }
+
+    /* --- SOBRE INICIAL --- */
+    .hero-section {
+      height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 320px; height: 220px;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .envelope {
+      position: absolute; width: 100%; height: 100%;
+      background-color: var(--azul-antiguo);
+      background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      border-radius: 4px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      z-index: 4;
+    }
+
+    .envelope-top {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #24354a;
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      z-index: 6;
+      transition: transform 0.8s ease;
+      transform-origin: top;
+    }
+
+    .wax-seal {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -20%);
+      width: 70px; height: 70px;
+      background: radial-gradient(circle, #d4af37, #b59a6d);
+      border-radius: 50%;
+      z-index: 10;
+      display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .wax-seal span { font-family: var(--fuente-nombres); font-size: 1.8rem; color: white; }
+
+    .tag-card {
+      position: absolute; bottom: 5px; left: 5%;
+      width: 90%; height: 200px;
+      background-color: var(--crema);
+      border-radius: 3px;
+      z-index: 2;
+      transition: all 0.8s ease;
+      padding: 20px 10px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .envelope-wrapper.open .envelope-top { transform: rotateX(180deg); z-index: 1; }
+    .envelope-wrapper.open .tag-card { transform: translateY(-160px); z-index: 8; height: 260px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+    /* --- CONTENIDO PRINCIPAL --- */
+    .content-section { display: none; padding: 40px 15px; max-width: 600px; margin: 0 auto; text-align: center; }
     
-    /* --- DISEÑO DEL CONTADOR CORREGIDO --- */
-    .countdown-container { display: flex; justify-content: center; gap: 10px; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
-    .countdown-item { display: flex; flex-direction: column; width: 65px; align-items: center; }
-    .countdown-number { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: bold; color: var(--azul); line-height: 1; }
-    .countdown-label { font-size: 0.6rem; color: var(--dorado); text-transform: uppercase; margin-top: 5px; font-weight: 600; }
+    .arch-card-large { 
+      background: white; 
+      border-radius: 150px 150px 20px 20px; 
+      padding: 60px 20px 40px; 
+      border: 1px solid #dcd0ba; 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+    }
+
+    /* --- CONTADOR OPTIMIZADO --- */
+    .countdown-container {
+      display: flex; 
+      justify-content: center; 
+      gap: 10px;
+      margin-top: 30px; 
+      padding-top: 20px; 
+      border-top: 1px solid #f0f0f0;
+    }
+    .countdown-item { display: flex; flex-direction: column; align-items: center; width: 60px; }
+    .countdown-number { 
+      font-family: var(--fuente-nombres); 
+      font-size: 1.6rem; 
+      color: var(--azul-antiguo); 
+      font-weight: bold;
+    }
+    .countdown-label { font-size: 0.55rem; text-transform: uppercase; color: var(--dorado); font-weight: 600; }
+
+    /* --- CARRUSEL CON IMÁGENES DE INTERNET --- */
+    .carousel-container { 
+      position: relative; overflow: hidden; 
+      border-radius: 120px 120px 20px 20px; 
+      border: 5px solid white; 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+      margin: 30px 0;
+    }
+    .carousel-slide { display: flex; transition: transform 0.6s ease; }
+    .carousel-slide img { width: 100%; aspect-ratio: 4/5; object-fit: cover; flex-shrink: 0; }
     
-    .btn-wa { background: var(--azul); color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: white; border: none; width: 35px; height: 35px; cursor: pointer; border-radius: 50%; z-index: 10; font-size: 1rem; }
+    .prev { left: 10px; } .next { right: 10px; }
+
+    /* --- ESTILOS EXTRA --- */
+    .timeline-item { display: flex; align-items: center; margin-bottom: 30px; position: relative; }
+    .timeline-dot { width: 12px; height: 12px; background: var(--azul-antiguo); border-radius: 50%; z-index: 2; margin: 0 15px; border: 2px solid white; box-shadow: 0 0 0 2px var(--dorado); }
+    
+    .btn-wa { 
+      background: var(--azul-antiguo); color: white; padding: 14px 20px; 
+      border-radius: 4px; border: none; font-weight: 600; cursor: pointer; 
+      width: 100%; max-width: 280px; text-decoration: none; display: inline-block;
+    }
+    .btn-wa:hover { background: var(--dorado); }
+    
+    input, select { width: 100%; max-width: 280px; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; margin-bottom: 10px; }
+
   </style>
 </head>
 <body>
 
   <div class="hero-section">
     <div class="envelope-wrapper" id="envelope" onclick="this.classList.toggle('open')">
-      <div class="envelope"><div class="envelope-top"></div></div>
+      <div class="envelope">
+        <div class="envelope-top"></div>
+        <div class="wax-seal"><span>L&T</span></div>
+      </div>
       <div class="tag-card">
-        <h2 style="font-family: 'Playfair Display'; margin:0;">Lorenzo & Thalia</h2>
-        <p style="font-size: 0.7rem; color: var(--dorado);">INVITACIÓN</p>
-        <p style="font-weight: bold; margin: 10px 0;">FAM. LLAMAS LÓPEZ</p>
-        <button class="btn-wa" id="btnDetalles">VER DETALLES</button>
+        <h2 style="font-family: var(--fuente-nombres); margin: 0; font-size: 1.5rem;">Lorenzo & Thalia</h2>
+        <p style="font-size: 0.6rem; letter-spacing: 2px; color: var(--dorado); margin: 5px 0;">INVITACIÓN EXCLUSIVA</p>
+        <div style="margin: 15px 0; height: 1px; background: rgba(0,0,0,0.1);"></div>
+        <p style="font-weight: 600; margin: 0; font-size: 0.9rem;">FAM. LLAMAS LÓPEZ</p>
+        <p style="font-size: 0.75rem; color: #666; margin: 5px 0;">Contamos con 5 Pases</p>
+        <button class="btn-wa" style="margin-top: 15px; padding: 10px; font-size: 0.7rem;" id="btnDetalles">VER INVITACIÓN</button>
       </div>
     </div>
-    <p style="margin-top: 20px; font-size: 0.7rem; opacity: 0.6;">TOCA EL SOBRE PARA ABRIR</p>
+    <p style="margin-top: 25px; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.7;">TOCA EL SOBRE PARA ABRIR</p>
   </div>
 
   <div id="secciones" class="content-section">
-    <div class="arch-card">
-      <h1 style="font-family: 'Playfair Display'; font-size: 2rem; margin-bottom: 5px;">Lorenzo & Thalia</h1>
-      <p style="letter-spacing: 2px; font-size: 0.9rem;">24 . MAYO . 2026</p>
+    <div class="arch-card-large">
+      <p style="letter-spacing: 4px; font-size: 0.7rem; color: var(--dorado);">SAVE THE DATE</p>
+      <h1 style="font-family: var(--fuente-nombres); font-size: 2.2rem; margin: 10px 0;">Lorenzo & Thalia</h1>
+      <p style="font-style: italic; color: #777; font-size: 0.9rem; margin: 15px 0;">"Donde tú vayas, yo iré; donde tú vivas, yo viviré."</p>
       
-      <div class="countdown-container">
-        <div class="countdown-item"><span id="days" class="countdown-number">00</span><span class="countdown-label">Días</span></div>
-        <div class="countdown-item"><span id="hours" class="countdown-number">00</span><span class="countdown-label">Horas</span></div>
-        <div class="countdown-item"><span id="minutes" class="countdown-number">00</span><span class="countdown-label">Min</span></div>
-        <div class="countdown-item"><span id="seconds" class="countdown-number">00</span><span class="countdown-label">Seg</span></div>
+      <div style="font-size: 1.2rem; font-weight: 600; color: var(--azul-antiguo); letter-spacing: 2px; margin-top: 20px;">
+        24 . MAYO . 2026
       </div>
+
+      <div class="countdown-container" id="timer-display">
+        <div class="countdown-item"><span class="countdown-number" id="VAL_DIAS">00</span><span class="countdown-label">Días</span></div>
+        <div class="countdown-item"><span class="countdown-number" id="VAL_HORAS">00</span><span class="countdown-label">Hrs</span></div>
+        <div class="countdown-item"><span class="countdown-number" id="VAL_MIN">00</span><span class="countdown-label">Min</span></div>
+        <div class="countdown-item"><span class="countdown-number" id="VAL_SEG">00</span><span class="countdown-label">Seg</span></div>
+      </div>
+    </div>
+
+    <div class="carousel-container">
+      <div class="carousel-slide" id="slider">
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=500" alt="Boda 1">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=500" alt="Boda 2">
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=500" alt="Boda 3">
+      </div>
+      <button class="carousel-btn prev" id="prevBtn">❮</button>
+      <button class="carousel-btn next" id="nextBtn">❯</button>
+    </div>
+
+    <h2 style="font-family: var(--fuente-nombres); font-size: 1.8rem; margin-top: 40px;">Itinerario</h2>
+    <div style="margin: 30px 0;">
+      <div class="timeline-item">
+        <div style="flex:1; text-align:right; padding-right: 10px;"><h4>Ceremonia</h4><p style="font-size:0.8rem;">10:30 AM<br>Iglesia San Francisco</p></div>
+        <div class="timeline-dot"></div>
+        <div style="flex:1;"></div>
+      </div>
+      <div class="timeline-item">
+        <div style="flex:1;"></div>
+        <div class="timeline-dot"></div>
+        <div style="flex:1; text-align:left; padding-left: 10px;"><h4>Celebración</h4><p style="font-size:0.8rem;">12:00 PM<br>Mistika Casa Club</p></div>
+      </div>
+    </div>
+
+    <div class="arch-card-large" style="border-radius: 20px; padding: 30px 15px; margin-top: 40px;">
+        <h3 style="font-family: var(--fuente-nombres); letter-spacing: 2px; font-size: 1.2rem;">CONFIRMACIÓN</h3>
+        <input type="text" id="nombre_invitado" placeholder="Tu nombre completo" required><br>
+        <button type="button" class="btn-wa" onclick="enviarWA()">CONFIRMAR POR WHATSAPP <i class="fa-brands fa-whatsapp"></i></button>
     </div>
   </div>
 
-<script>
-  // Mostrar la invitación
-  const btn = document.getElementById('btnDetalles');
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.getElementById('secciones').style.display = 'block';
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-  });
+  <script>
+    // Script para mostrar contenido al hacer clic en el botón del sobre
+    document.getElementById('btnDetalles').addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita que el clic cierre el sobre
+      document.getElementById('secciones').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('secciones').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    });
 
-  // --- LÓGICA DEL CONTADOR (REVISADA) ---
-  function updateTimer() {
-    const targetDate = new Date("May 24, 2026 10:30:00").getTime();
-    const now = new Date().getTime();
-    const gap = targetDate - now;
+    // Contador Reconstruido
+    const targetDate = new Date("2026-05-24T10:30:00-05:00").getTime();
+    const updateTimer = () => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+        const d_el = document.getElementById("VAL_DIAS");
+        const h_el = document.getElementById("VAL_HORAS");
+        const m_el = document.getElementById("VAL_MIN");
+        const s_el = document.getElementById("VAL_SEG");
 
-    if (gap <= 0) {
-      document.querySelector('.countdown-container').innerHTML = "<h3>¡Llegó el día!</h3>";
-      return;
+        if (distance < 0) {
+            document.getElementById("timer-display").innerHTML = "<h3>¡ES HOY!</h3>";
+            return;
+        }
+
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if(d_el) d_el.textContent = String(d).padStart(2, '0');
+        if(h_el) h_el.textContent = String(h).padStart(2, '0');
+        if(m_el) m_el.textContent = String(m).padStart(2, '0');
+        if(s_el) s_el.textContent = String(s).padStart(2, '0');
+    };
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Carrusel Automático y Manual
+    const slider = document.getElementById('slider');
+    let currentIndex = 0;
+    const totalSlides = slider.children.length;
+
+    const updateCarousel = () => {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    };
+
+    document.getElementById('nextBtn').onclick = () => { currentIndex = (currentIndex + 1) % totalSlides; updateCarousel(); };
+    document.getElementById('prevBtn').onclick = () => { currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; updateCarousel(); };
+
+    setInterval(() => { currentIndex = (currentIndex + 1) % totalSlides; updateCarousel(); }, 4000); // Cambio automático cada 4s
+
+    function enviarWA() {
+      const nombre = document.getElementById('nombre_invitado').value;
+      if (!nombre) return alert("Por favor, escribe tu nombre.");
+      window.open(`https://wa.me/593900000000?text=¡Hola! Confirmo mi asistencia: ${nombre}`, '_blank');
     }
-
-    // Cálculos de tiempo
-    const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-    const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((gap % (1000 * 60)) / 1000);
-
-    // Actualizar el HTML (asegurando que siempre tengan 2 dígitos)
-    document.getElementById('days').innerText = d < 10 ? '0' + d : d;
-    document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
-    document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
-    document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
-  }
-
-  // Ejecutar cada segundo
-  setInterval(updateTimer, 1000);
-  updateTimer(); // Llamar una vez al cargar para evitar el 00 inicial
-</script>
-
+  </script>
 </body>
 </html>
