@@ -102,13 +102,37 @@
       position: relative;
     }
 
+    /* --- AJUSTE DEL CONTADOR --- */
     .countdown-container {
-      display: flex; justify-content: center; align-items: center; gap: 15px;
-      margin-top: 30px; padding-top: 20px; border-top: 1px solid #f0f0f0;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 10px; /* Reducido para que quepa mejor */
+      margin-top: 30px; 
+      padding-top: 20px; 
+      border-top: 1px solid #f0f0f0;
     }
-    .countdown-item { display: flex; flex-direction: column; align-items: center; min-width: 65px; }
-    .countdown-number { font-family: var(--fuente-nombres); font-size: 2.2rem; color: var(--azul-antiguo); line-height: 1; }
-    .countdown-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dorado); margin-top: 5px; font-weight: 600; }
+    .countdown-item { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      min-width: 55px; /* Ajustado */
+    }
+    .countdown-number { 
+      font-family: var(--fuente-nombres); 
+      font-size: 1.8rem; /* Tamaño optimizado para que no salte de línea */
+      color: var(--azul-antiguo); 
+      line-height: 1; 
+      font-weight: bold;
+    }
+    .countdown-label { 
+      font-size: 0.6rem; /* Un poco más pequeño y elegante */
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
+      color: var(--dorado); 
+      margin-top: 5px; 
+      font-weight: 600; 
+    }
 
     /* --- CARRUSEL --- */
     .carousel-outer { margin: 40px auto; max-width: 450px; }
@@ -235,16 +259,12 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. LÓGICA DEL CONTADOR (RECONSTRUIDA) ---
-    // Usamos formato ISO 8601 que es el estándar universal
-   
     const targetDate = new Date("2026-05-24T10:30:00-05:00").getTime();
 
     const updateTimer = () => {
         const now = new Date().getTime();
         const distance = targetDate - now;
 
-        // Elementos del DOM con nuevos IDs para evitar conflictos
         const d_el = document.getElementById("VAL_DIAS");
         const h_el = document.getElementById("VAL_HORAS");
         const m_el = document.getElementById("VAL_MIN");
@@ -255,24 +275,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Fórmulas matemáticas puras
         const d = Math.floor(distance / (1000 * 60 * 60 * 24));
         const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Inyección de texto con formato de 2 dígitos
         if(d_el) d_el.textContent = String(d).padStart(2, '0');
         if(h_el) h_el.textContent = String(h).padStart(2, '0');
         if(m_el) m_el.textContent = String(m).padStart(2, '0');
         if(s_el) s_el.textContent = String(s).padStart(2, '0');
     };
 
-    // Arrancar contador
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // --- 2. LÓGICA DEL SOBRE ---
     const envelope = document.getElementById('envelope');
     const btnDetalles = document.getElementById('btnDetalles');
     const secciones = document.getElementById('secciones');
@@ -293,14 +309,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. LÓGICA DEL CARRUSEL ---
     const slider = document.getElementById('slider');
     const dotsWrap = document.getElementById('dots-wrap');
     if (slider && dotsWrap) {
         let currentIndex = 0;
         const totalSlides = slider.children.length;
 
-        // Crear puntos (dots)
         for(let i=0; i<totalSlides; i++) {
             const dot = document.createElement('span');
             dot.className = i === 0 ? 'dot active' : 'dot';
@@ -334,9 +348,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 4. FUNCIÓN WHATSAPP ---
 function enviarWA() {
-    const telefono = "51900000000"; // Cambia este número
+    const telefono = "593900000000"; // Asegúrate de poner el código de Ecuador 593
     const nombre = document.getElementById('nombre_invitado').value;
     const conf = document.getElementById('confirmacion_val').value;
     
